@@ -59,6 +59,7 @@
         android:layout_marginStart="14dp"
         android:layout_marginEnd="14dp"
         android:layout_marginTop="20dp"
+        android:padding="5dp"
         android:background="@drawable/bg_tab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,14 +69,15 @@
         app:tabIndicatorColor="@null"
         app:tabIndicatorGravity="stretch"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/color3"
-        app:tabTextColor="@color/color1"
+        app:tabSelectedTextColor="@color/color1"
+        app:tabTextColor="@color/color3"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="69dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
