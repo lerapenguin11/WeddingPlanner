@@ -5,4 +5,6 @@
     <string name="wedding">Wedding</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="next">Next</string>
+    <string name="text_on">Plan your wedding in our application. Add items, plan your budget and get inspired by ideas</string>
 </resources>
