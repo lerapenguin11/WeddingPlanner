@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Wedding Planner</string>
+    <string name="favorites">Favorites</string>
+    <string name="categories">Categories</string>
+    <string name="wedding">Wedding</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
