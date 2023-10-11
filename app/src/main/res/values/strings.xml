@@ -12,4 +12,6 @@
     <string name="date">Date</string>
     <string name="budget">$ Budget</string>
     <string name="day_month_year">Day Month Year</string>
+    <string name="ready_for_the_wedding">Ready for the wedding</string>
+    <string name="things_to_do">Things to Do</string>
 </resources>
