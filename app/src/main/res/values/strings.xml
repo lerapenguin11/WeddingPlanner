@@ -7,4 +7,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="next">Next</string>
     <string name="text_on">Plan your wedding in our application. Add items, plan your budget and get inspired by ideas</string>
+    <string name="text_data">Enter your names and wedding date</string>
+    <string name="name_amp_name"><![CDATA[Name & Name]]></string>
+    <string name="date">Date</string>
+    <string name="budget">$ Budget</string>
+    <string name="day_month_year">Day Month Year</string>
 </resources>
