@@ -1,60 +1,83 @@
 package com.example.weddingplanner.presentation
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.domain.entities.Todo
 import com.example.weddingplanner.R
+import com.example.weddingplanner.databinding.FragmentPlanningBinding
+import com.example.weddingplanner.presentation.adapter.TodoAdapter
+import com.example.weddingplanner.viewmodel.TodoViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PlanningFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PlanningFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding : FragmentPlanningBinding? = null
+    private val binding get() = _binding!!
+    private val todoViewModel by viewModel<TodoViewModel>()
+    private val todoAdapter = TodoAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_planning, container, false)
+
+        _binding = FragmentPlanningBinding.inflate(inflater, container, false)
+
+        binding.btAdd.setOnClickListener {
+            showTodoDialog()
+        }
+        todoViewModel.getAllTodo()
+        binding.rvThingsToDo.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.rvThingsToDo.adapter = todoAdapter
+
+        todoViewModel.todoList.observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()){
+                binding.cvToDo.visibility = View.VISIBLE
+            }
+            todoAdapter.setItem(it)
+        })
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PlanningFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PlanningFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private fun showTodoDialog() {
+        val dialog = context?.let { Dialog(it) }
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.setCancelable(false)
+        dialog?.setContentView(R.layout.item_dialog_todo)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val close : ImageButton = dialog!!.findViewById(R.id.ib_close)
+        val enterText : EditText = dialog.findViewById(R.id.et_enter_todo)
+        val done : ConstraintLayout = dialog.findViewById(R.id.bt_bt_done)
+
+        dialog.show()
+
+        done.setOnClickListener {
+            val text = enterText.text.toString()
+            if (text.isNotEmpty()){
+                val note = Todo(text = text, isCompleted = false)
+                todoViewModel.insertTodo(note)
+                enterText.text.clear()
+                binding.cvToDo.visibility = View.VISIBLE
+                dialog.cancel()
+            } else{
+                Toast.makeText(requireContext(), "Enter the text", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        close.setOnClickListener{dialog.cancel()}
     }
 }
