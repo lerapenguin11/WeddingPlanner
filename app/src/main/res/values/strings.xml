@@ -14,4 +14,8 @@
     <string name="day_month_year">Day Month Year</string>
     <string name="ready_for_the_wedding">Ready for the wedding</string>
     <string name="things_to_do">Things to Do</string>
+    <string name="budget_amp_expenses"><![CDATA[Budget & Expenses]]></string>
+    <string name="text_dialog_todo">Enter the text what you need to do…</string>
+    <string name="done">Done</string>
+    <string name="things_to_d">Things to Do...</string>
 </resources>
