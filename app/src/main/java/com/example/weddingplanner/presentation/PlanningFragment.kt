@@ -19,14 +19,20 @@ import com.example.domain.entities.Todo
 import com.example.weddingplanner.R
 import com.example.weddingplanner.databinding.FragmentPlanningBinding
 import com.example.weddingplanner.presentation.adapter.TodoAdapter
+import com.example.weddingplanner.presentation.adapter.listener.TodoListener
 import com.example.weddingplanner.viewmodel.TodoViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PlanningFragment : Fragment() {
+class PlanningFragment : Fragment(), TodoListener {
     private var _binding : FragmentPlanningBinding? = null
     private val binding get() = _binding!!
     private val todoViewModel by viewModel<TodoViewModel>()
-    private val todoAdapter = TodoAdapter()
+    private val todoAdapter = TodoAdapter(this)
+    private lateinit var list : List<Todo>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +53,7 @@ class PlanningFragment : Fragment() {
                 binding.cvToDo.visibility = View.VISIBLE
             }
             todoAdapter.setItem(it)
+            list = it
         })
 
         return binding.root
@@ -68,16 +75,30 @@ class PlanningFragment : Fragment() {
         done.setOnClickListener {
             val text = enterText.text.toString()
             if (text.isNotEmpty()){
-                val note = Todo(text = text, isCompleted = false)
-                todoViewModel.insertTodo(note)
+
+                if (list.isEmpty()){
+                    val note = Todo(text = text, isCompleted = false, id = 0)
+                    todoViewModel.insertTodo(note)
+                } else{
+                    val last = list.last()
+                    var lastId : Int = last.id
+                    lastId++
+                    val note = Todo(text = text, isCompleted = false, id = lastId)
+                    todoViewModel.insertTodo(note)
+                }
                 enterText.text.clear()
                 binding.cvToDo.visibility = View.VISIBLE
                 dialog.cancel()
+
             } else{
                 Toast.makeText(requireContext(), "Enter the text", Toast.LENGTH_SHORT).show()
             }
         }
 
         close.setOnClickListener{dialog.cancel()}
+    }
+
+    override fun getTodoListener(todo: Todo) {
+        todoViewModel.updateTodo(Todo(id = todo.id, text = todo.text, isCompleted = true))
     }
 }

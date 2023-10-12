@@ -1,5 +1,6 @@
 package com.example.data.repositories
 
+import com.example.data.entities.Note
 import com.example.domain.entities.Todo
 import kotlinx.coroutines.flow.Flow
 

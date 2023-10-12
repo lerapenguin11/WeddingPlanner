@@ -1,6 +1,7 @@
 package com.example.data.repositories
 
 import com.example.data.db.NoteDao
+import com.example.data.entities.Note
 import com.example.data.mappers.NoteEntityMapper
 import com.example.domain.entities.Todo
 import kotlinx.coroutines.Dispatchers

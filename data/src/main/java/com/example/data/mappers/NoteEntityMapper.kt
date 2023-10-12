@@ -7,7 +7,7 @@ class NoteEntityMapper {
 
     fun toNoteEntity(todo: Todo): Note {
         return Note(
-            //id = todo.id,
+            id = todo.id,
             text = todo.text,
             isCompleted = todo.isCompleted
         )
@@ -15,9 +15,17 @@ class NoteEntityMapper {
 
     fun toTodo(note: Note): Todo {
         return Todo(
-            //id = note.id,
+            id = note.id,
             text = note.text,
             isCompleted = note.isCompleted
         )
     }
+
+    /*fun toTodoString(text: String): Todo {
+        return Todo(
+
+            text = text,
+            isCompleted = false
+        )
+    }*/
 }

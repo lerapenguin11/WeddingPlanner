@@ -9,8 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.entities.Todo
 import com.example.weddingplanner.R
+import com.example.weddingplanner.presentation.adapter.listener.TodoListener
 
-class TodoAdapter() : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>(){
+class TodoAdapter(private val listener : TodoListener) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>(){
 
     private val todoList = mutableListOf<Todo>()
 
@@ -26,6 +27,15 @@ class TodoAdapter() : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>(){
         val todo : Todo = todoList[position]
 
         holder.text.text = todo.text
+
+        holder.itemView.setOnClickListener {
+            listener.getTodoListener(todo = todo)
+            holder.check.visibility = View.VISIBLE
+        }
+
+        if (todo.isCompleted){
+            holder.check.visibility = View.VISIBLE
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
