@@ -1,7 +1,6 @@
-package com.example.data.repositories
+package com.example.data.repositories.todo
 
 import com.example.data.db.NoteDao
-import com.example.data.entities.Note
 import com.example.data.mappers.NoteEntityMapper
 import com.example.domain.entities.Todo
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +10,7 @@ import kotlinx.coroutines.withContext
 
 class TodoLocalDataSourceImpl(
     private val noteDao: NoteDao,
-    private val noteEntityMapper: NoteEntityMapper) : TodoLocalDataSource{
+    private val noteEntityMapper: NoteEntityMapper) : TodoLocalDataSource {
 
     override fun getAllNotes(): Flow<List<Todo>> {
         val noteFlow = noteDao.getAllNotes()

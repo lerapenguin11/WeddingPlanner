@@ -15,11 +15,15 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.domain.entities.Ready
 import com.example.domain.entities.Todo
 import com.example.weddingplanner.R
 import com.example.weddingplanner.databinding.FragmentPlanningBinding
+import com.example.weddingplanner.presentation.adapter.ReadyAdapter
 import com.example.weddingplanner.presentation.adapter.TodoAdapter
+import com.example.weddingplanner.presentation.adapter.listener.ReadyListener
 import com.example.weddingplanner.presentation.adapter.listener.TodoListener
+import com.example.weddingplanner.viewmodel.ReadyViewModel
 import com.example.weddingplanner.viewmodel.TodoViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -27,12 +31,14 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PlanningFragment : Fragment(), TodoListener {
+class PlanningFragment : Fragment(), TodoListener, ReadyListener {
     private var _binding : FragmentPlanningBinding? = null
     private val binding get() = _binding!!
     private val todoViewModel by viewModel<TodoViewModel>()
     private val todoAdapter = TodoAdapter(this)
     private lateinit var list : List<Todo>
+    private val readyViewModel by viewModel<ReadyViewModel>()
+    private val readyAdapter = ReadyAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +50,20 @@ class PlanningFragment : Fragment(), TodoListener {
         binding.btAdd.setOnClickListener {
             showTodoDialog()
         }
+
+        readyViewModel.getAllReady()
+        binding.rvReady.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvReady.adapter = readyAdapter
+        readyViewModel.readyList.observe(viewLifecycleOwner, Observer {
+            if (it.isEmpty()){
+                readyViewModel.init()
+                readyViewModel.insertReady(readyViewModel.list)
+                readyAdapter.setItem(it)
+            } else{
+                readyAdapter.setItem(it)
+            }
+        })
+
         todoViewModel.getAllTodo()
         binding.rvThingsToDo.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.rvThingsToDo.adapter = todoAdapter
@@ -100,5 +120,9 @@ class PlanningFragment : Fragment(), TodoListener {
 
     override fun getTodoListener(todo: Todo) {
         todoViewModel.updateTodo(Todo(id = todo.id, text = todo.text, isCompleted = true))
+    }
+
+    override fun getReadyListener(ready: Ready) {
+        readyViewModel.updateReady(Ready(id = ready.id, text = ready.text, isCompleted = true, icon = ready.icon))
     }
 }

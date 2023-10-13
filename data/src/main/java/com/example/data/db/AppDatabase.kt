@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.data.entities.Note
+import com.example.data.entities.ReadyEntity
 
-@Database(entities = [Note::class], version = 6)
+@Database(entities = [Note::class, ReadyEntity::class], version = 7)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
+    abstract fun readyDao() : ReadyDao
 
     companion object {
         @Volatile
@@ -19,7 +21,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "new_database_6"
+                    "new_database_7"
                 ).build()
                 INSTANCE = instance
                 instance

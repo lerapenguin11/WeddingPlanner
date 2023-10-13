@@ -1,4 +1,4 @@
-package com.example.data.repositories
+package com.example.data.repositories.todo
 
 import com.example.data.entities.Note
 import com.example.domain.entities.Todo

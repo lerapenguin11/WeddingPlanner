@@ -20,12 +20,4 @@ class NoteEntityMapper {
             isCompleted = note.isCompleted
         )
     }
-
-    /*fun toTodoString(text: String): Todo {
-        return Todo(
-
-            text = text,
-            isCompleted = false
-        )
-    }*/
 }
