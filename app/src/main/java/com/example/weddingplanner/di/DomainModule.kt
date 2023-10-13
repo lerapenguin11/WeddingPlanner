@@ -1,5 +1,8 @@
 package com.example.weddingplanner.di
 
+import com.example.domain.usecase.category.AllCategoryUseCase
+import com.example.domain.usecase.category.InsertCategoryUseCase
+import com.example.domain.usecase.category.UpdateCategoryUseCase
 import com.example.domain.usecase.ready.AllReadyUseCase
 import com.example.domain.usecase.ready.InsertReadyUseCase
 import com.example.domain.usecase.ready.UpdateReadyUseCase
@@ -31,6 +34,18 @@ val domainModule = module {
     )}
 
     factory<UpdateReadyUseCase> { UpdateReadyUseCase(
+        repository = get()
+    ) }
+
+    factory<AllCategoryUseCase> { AllCategoryUseCase(
+        repository = get()
+    ) }
+
+    factory<InsertCategoryUseCase> {  InsertCategoryUseCase(
+        repository = get()
+    )}
+
+    factory<UpdateCategoryUseCase> { UpdateCategoryUseCase(
         repository = get()
     ) }
 }
