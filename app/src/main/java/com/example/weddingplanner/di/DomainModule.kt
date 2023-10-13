@@ -3,6 +3,9 @@ package com.example.weddingplanner.di
 import com.example.domain.usecase.category.AllCategoryUseCase
 import com.example.domain.usecase.category.InsertCategoryUseCase
 import com.example.domain.usecase.category.UpdateCategoryUseCase
+import com.example.domain.usecase.favorite.AllFavoritesUseCase
+import com.example.domain.usecase.favorite.DeleteFavoritesUseCase
+import com.example.domain.usecase.favorite.InsertFavoritesUseCase
 import com.example.domain.usecase.ready.AllReadyUseCase
 import com.example.domain.usecase.ready.InsertReadyUseCase
 import com.example.domain.usecase.ready.UpdateReadyUseCase
@@ -46,6 +49,18 @@ val domainModule = module {
     )}
 
     factory<UpdateCategoryUseCase> { UpdateCategoryUseCase(
+        repository = get()
+    ) }
+
+    factory<AllFavoritesUseCase> { AllFavoritesUseCase(
+        repository = get()
+    ) }
+
+    factory<InsertFavoritesUseCase> {  InsertFavoritesUseCase(
+        repository = get()
+    )}
+
+    factory<DeleteFavoritesUseCase> { DeleteFavoritesUseCase(
         repository = get()
     ) }
 }

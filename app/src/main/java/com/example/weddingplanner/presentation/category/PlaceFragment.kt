@@ -8,16 +8,19 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.entities.Categories
+import com.example.domain.entities.Favorite
 import com.example.weddingplanner.databinding.FragmentPlaceBinding
 import com.example.weddingplanner.presentation.adapter.CategoryAdapter
+import com.example.weddingplanner.presentation.adapter.listener.CategoryListener
 import com.example.weddingplanner.viewmodel.CategoryViewModel
+import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PlaceFragment : Fragment() {
+class PlaceFragment : Fragment(), CategoryListener {
     private var _binding : FragmentPlaceBinding? = null
     private val binding get() = _binding!!
     private val placeViewModel by viewModel<CategoryViewModel>()
-    private val placeAdapter = CategoryAdapter()
+    private val placeAdapter = CategoryAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +43,6 @@ class PlaceFragment : Fragment() {
 
                 placeAdapter.setItem(filteredList)
             } else{
-                placeViewModel.getAllReady()
                 val filteredList = it.filter { category ->
                     category.id in 0..2
 
@@ -52,5 +54,15 @@ class PlaceFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun getCategoryListener(categories: Categories) {
+        if (categories.isCompleted){
+            placeViewModel.updatePlace(Categories(id = categories.id, icon = categories.icon, isCompleted = false))
+            placeViewModel.deleteFav(Favorite(id = categories.id, icon = categories.icon, isCompleted = false))
+        }else{
+            placeViewModel.updatePlace(Categories(id = categories.id, icon = categories.icon, isCompleted = true))
+            placeViewModel.insertFav(Favorite(id = categories.id, icon = categories.icon, isCompleted = true))
+        }
     }
 }

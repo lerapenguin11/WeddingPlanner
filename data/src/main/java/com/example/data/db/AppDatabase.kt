@@ -5,13 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.data.entities.CategoryEntity
+import com.example.data.entities.FavoriteEntity
 import com.example.data.entities.Note
 import com.example.data.entities.ReadyEntity
 
-@Database(entities = [Note::class, ReadyEntity::class, CategoryEntity::class], version = 9)
+@Database(entities = [Note::class, ReadyEntity::class, CategoryEntity::class, FavoriteEntity::class], version = 10)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
     abstract fun readyDao() : ReadyDao
+    abstract fun favDao() : FavoriteDao
 
     abstract fun categoryDao() : CategoryDao
 
@@ -24,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "new_database_9"
+                    "new_database_10"
                 ).build()
                 INSTANCE = instance
                 instance

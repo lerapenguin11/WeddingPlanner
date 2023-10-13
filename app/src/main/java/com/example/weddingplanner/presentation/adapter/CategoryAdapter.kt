@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.domain.entities.Categories
 import com.example.weddingplanner.R
+import com.example.weddingplanner.presentation.adapter.listener.CategoryListener
 
-class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(){
+class CategoryAdapter(private val listener : CategoryListener) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(){
 
     private val categoryList = mutableListOf<Categories>()
 
@@ -28,6 +29,23 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolde
         Glide.with(holder.itemView)
             .load(categories.icon)
             .into(holder.icon)
+
+        holder.btFav.setOnClickListener {
+            holder.btFav.visibility = View.GONE
+            holder.deleteFav.visibility = View.VISIBLE
+            listener.getCategoryListener(categories)
+        }
+
+        holder.deleteFav.setOnClickListener {
+            listener.getCategoryListener(categories)
+            holder.deleteFav.visibility = View.GONE
+            holder.btFav.visibility = View.VISIBLE
+        }
+
+        if (categories.isCompleted){
+            holder.btFav.visibility = View.GONE
+            holder.deleteFav.visibility = View.VISIBLE
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -40,5 +58,6 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolde
     class CategoryViewHolder(view : View) : RecyclerView.ViewHolder(view){
         val icon : ImageView = view.findViewById(R.id.ic_category)
         val btFav : ImageView = view.findViewById(R.id.ic_add_fav)
+        val deleteFav : ImageView = view.findViewById(R.id.ic_delete_fav)
     }
 }

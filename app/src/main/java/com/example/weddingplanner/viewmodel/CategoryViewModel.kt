@@ -5,17 +5,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.entities.Categories
-import com.example.domain.entities.Ready
+import com.example.domain.entities.Favorite
 import com.example.domain.usecase.category.AllCategoryUseCase
 import com.example.domain.usecase.category.InsertCategoryUseCase
 import com.example.domain.usecase.category.UpdateCategoryUseCase
-import com.example.weddingplanner.R
+import com.example.domain.usecase.favorite.AllFavoritesUseCase
+import com.example.domain.usecase.favorite.DeleteFavoritesUseCase
+import com.example.domain.usecase.favorite.InsertFavoritesUseCase
 import kotlinx.coroutines.launch
 
 class CategoryViewModel(
     private val allCategoryUseCase: AllCategoryUseCase,
     private val insertCategoryUseCase: InsertCategoryUseCase,
-    private val updateCategoryUseCase: UpdateCategoryUseCase)
+    private val updateCategoryUseCase: UpdateCategoryUseCase,
+    private val allFavoritesUseCase: AllFavoritesUseCase,
+    private val insertFavoritesUseCase: InsertFavoritesUseCase,
+    private val deleteFavoritesUseCase: DeleteFavoritesUseCase)
     : ViewModel(){
 
     private val _placeList = MutableLiveData<List<Categories>>()
@@ -31,11 +36,35 @@ class CategoryViewModel(
         updateCategoryUseCase.invoke(categories = ready)
     }
 
+    fun getAllReady2() = viewModelScope.launch {
+        allCategoryUseCase.invoke()
+            .collect{todo -> todo}
+    }
+
     fun getAllReady() {
         viewModelScope.launch {
             allCategoryUseCase.invoke()
                 .collect{todo ->
                     _placeList.value = todo}
+        }
+    }
+
+    private val _favList = MutableLiveData<List<Favorite>>()
+    val favList: LiveData<List<Favorite>> get() = _favList
+
+    fun insertFav(favorite: Favorite) = viewModelScope.launch{
+        insertFavoritesUseCase.invoke(favorite = favorite)
+    }
+
+    fun deleteFav(favorite: Favorite) = viewModelScope.launch{
+        deleteFavoritesUseCase.invoke(favorite = favorite)
+    }
+
+    fun getAllFav() {
+        viewModelScope.launch {
+            allFavoritesUseCase.invoke()
+                .collect{todo ->
+                    _favList.value = todo}
         }
     }
 

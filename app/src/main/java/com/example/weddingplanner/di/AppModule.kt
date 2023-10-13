@@ -27,7 +27,10 @@ val appModule = module {
         CategoryViewModel(
             allCategoryUseCase = get(),
             insertCategoryUseCase = get(),
-            updateCategoryUseCase = get()
+            updateCategoryUseCase = get(),
+            allFavoritesUseCase = get(),
+            insertFavoritesUseCase = get(),
+            deleteFavoritesUseCase = get()
         )
     }
 }
