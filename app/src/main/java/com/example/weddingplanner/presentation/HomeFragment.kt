@@ -14,23 +14,19 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.example.domain.entities.Ready
 import com.example.domain.entities.Todo
-import com.example.weddingplanner.MainActivity
 import com.example.weddingplanner.R
-import com.example.weddingplanner.databinding.FragmentDataBinding
 import com.example.weddingplanner.databinding.FragmentHomeBinding
-import com.example.weddingplanner.presentation.adapter.HomePagerAdapter
 import com.example.weddingplanner.presentation.adapter.ReadyAdapter
 import com.example.weddingplanner.presentation.adapter.TodoAdapter
 import com.example.weddingplanner.presentation.adapter.listener.ReadyListener
 import com.example.weddingplanner.presentation.adapter.listener.TodoListener
-import com.example.weddingplanner.utilits.replaceFragmentMain
 import com.example.weddingplanner.viewmodel.ReadyViewModel
+import com.example.weddingplanner.viewmodel.RegistrationViewModel
 import com.example.weddingplanner.viewmodel.TodoViewModel
-import com.google.android.material.tabs.TabLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(), TodoListener, ReadyListener {
@@ -41,6 +37,7 @@ class HomeFragment : Fragment(), TodoListener, ReadyListener {
     private lateinit var list : List<Todo>
     private val readyViewModel by viewModel<ReadyViewModel>()
     private val readyAdapter = ReadyAdapter(this)
+    private lateinit var viewModel: RegistrationViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +45,11 @@ class HomeFragment : Fragment(), TodoListener, ReadyListener {
     ): View? {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        viewModel = ViewModelProvider(requireActivity()).get(RegistrationViewModel::class.java)
+
+        binding.tvName.text = viewModel.sharedPreferences.getString("name", "null")
+        binding.tvDate.text = viewModel.sharedPreferences.getString("date", "null")
 
         binding.btAdd.setOnClickListener {
             showTodoDialog()

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main_layout"
     android:background="@color/white"
-    tools:context=".MainActivity">
+    tools:context=".presentation.MainActivity">
 
     <FrameLayout
         android:id="@+id/bottom_nav"

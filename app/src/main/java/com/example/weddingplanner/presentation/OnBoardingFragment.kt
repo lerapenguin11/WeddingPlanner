@@ -1,13 +1,10 @@
 package com.example.weddingplanner.presentation
 
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.weddingplanner.MainActivity
-import com.example.weddingplanner.R
 import com.example.weddingplanner.databinding.FragmentOnBoardingBinding
 import com.example.weddingplanner.utilits.replaceFragmentMain
 

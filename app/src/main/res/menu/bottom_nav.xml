@@ -3,15 +3,18 @@
     <item
         android:title="@string/wedding"
         android:id="@+id/home"
+        android:tooltipText="home"
         android:enabled="true"
         android:icon="@drawable/ic_home"/>
     <item
         android:title="@string/categories"
+        android:tooltipText="categories"
         android:id="@+id/categories"
         android:icon="@drawable/ic_category"/>
 
     <item
         android:title="@string/favorites"
+        android:tooltipText="favorites"
         android:id="@+id/save"
         android:icon="@drawable/ic_save"/>
 </menu>

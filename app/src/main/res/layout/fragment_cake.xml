@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:paddingStart="14dp"
     android:paddingEnd="14dp"
-    tools:context=".presentation.SaveFragment">
+    tools:context=".presentation.category.CakeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -23,20 +23,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sf_pro_text_bold"
-            android:text="@string/favorites"
+            android:text="@string/wedding_cake"
             android:textColor="@color/color2"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ic_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_fav"
+        android:id="@+id/rv_place"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:listitem="@layout/item_fav"
+        tools:listitem="@layout/item_category"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
         android:layout_marginBottom="89dp"
